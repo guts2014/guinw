@@ -48,9 +48,22 @@
         </table>
         <ul class="pager">
             <li>
-                <a>Next</a>
+                {% if page == 1 %}
+                    <a>Back</a>
+                {% else %}
+                    <a href="/search/{{ page|add:"-1" }}/?query={{ query }}">Back</a>
+                {% endif %}
+            </li>
+            <li>
+                <a>{{ page }}</a>
+            </li>
+            <li>
+                {% if page == 100 %}
+                    <a>Next</a>
+                {% else %}
+                    <a href="/search/{{ page|add:"1" }}/?query={{ query }}">Next</a>
+                {% endif %}
             </li>
         </ul>
-    </div>
     </div>
 {% endblock %}

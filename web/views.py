@@ -1,7 +1,9 @@
-from django.shortcuts import render
 from mmap import mmap
-from sas.settings import BASE_DIR
+
+from django.shortcuts import render
 import wikipedia
+
+from sas.settings import BASE_DIR
 
 
 MONTH = {1: 'January',
@@ -38,15 +40,16 @@ def getdata(query, line, page):
     f.close()
 
     data = data[::-1]
-    data = data[line * page:line * page + line]
+    data = data[line * page - line:line * page]
 
     # return data
     return data
 
 
-def search(request, line=10, page=0):
+def search(request, line=10, page=1):
     query = request.GET.get('query', '')
-    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page)})
+    page = int(page)
+    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page), 'page': page})
 
 
 def detail(request, eid):
