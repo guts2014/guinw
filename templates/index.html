@@ -8,9 +8,10 @@
                     <div class="col-lg-6 col-lg-offset-3" style="margin-top: 10px">
                         <h1 class="text-center" style="color: #ffffff">Terrorism Search</h1>
 
-                        <form action="/search/" method="POST">{% csrf_token %}
+                        <form action="/search/" method="GET">{% csrf_token %}
                             <div class="input-group" style="margin-bottom: 15px">
-                                <input type="text" class="form-control" placeholder="Search name / place / date / etc">
+                                <input name="query" type="text" class="form-control"
+                                       placeholder="Search name / place / date / etc">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>

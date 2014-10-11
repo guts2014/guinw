@@ -1,6 +1,8 @@
 import mmap
+
 import wikipedia
 from django.shortcuts import render
+
 from sas.settings import BASE_DIR
 
 
@@ -8,10 +10,8 @@ def index(request):
     return render(request, 'index.html')
 
 
-def search(request):
-    if request.method == 'GET':
-        return render(request, 'search.html')
-    query = request.POST.get('query', '')
+def search(request, page=0):
+    query = request.GET.get('query', '')
     # collect data from CSV and list it
     # read CSV with filter
     data = list()
@@ -24,6 +24,8 @@ def search(request):
                 data.append(s.split(','))
         map_input.close()
     f.close()
+    total = len(data)
+    data = data[(abs(total - page - 1)) * 10:(abs(total - page)) * 10]
     # return data
     return render(request, 'search.html', {'query': query, 'data': data})
 

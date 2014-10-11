@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'web.views.index'),
     url(r'^search/', 'web.views.search'),
-    url(r'^(?P<eid>[0-9]+)/$', 'web.views.detail', name='detail_url'),
+    url(r'^search/(?P<page>[0-9]+)', 'web.views.search'),
+    url(r'^(?P<eid>[0-9]+)/$', 'web.views.detail'),
 )
