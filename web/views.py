@@ -4,12 +4,25 @@ from sas.settings import BASE_DIR
 import wikipedia
 
 
+MONTH = {1: 'January',
+         2: 'February',
+         3: 'March',
+         4: 'April',
+         5: 'May',
+         6: 'June',
+         7: 'July',
+         8: 'August',
+         9: 'September',
+         10: 'October',
+         11: 'November',
+         12: 'December'}
+
+
 def index(request):
     return render(request, 'index.html')
 
 
-def search(request, line=10, page=0):
-    query = request.GET.get('query', '')
+def getdata(query, line, page):
     # collect data from CSV and list it
     # read CSV with filter
     data = list()
@@ -28,11 +41,24 @@ def search(request, line=10, page=0):
     data = data[line * page:line * page + line]
 
     # return data
-    return render(request, 'search.html', {'query': query, 'data': data})
+    return data
+
+
+def search(request, line=10, page=0):
+    query = request.GET.get('query', '')
+    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page)})
 
 
 def detail(request, eid):
     # gathering information from wikipedia and get images from sources
     # from eid get keyword from csv
+
+    data = getdata(eid, 1, 0)
+
+    titles = wikipedia.search('2009 September 28  Myanmar Kokang')
+    a = wikipedia.page(titles)
+    a.content
+    print titles
+
     summary = wikipedia.summary("9-11")
     return render(request, 'detail.html', {'eid': eid, 'summary': summary})
