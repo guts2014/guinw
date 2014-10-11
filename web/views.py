@@ -1,6 +1,9 @@
 import mmap
 import os
+
+import wikipedia
 from django.shortcuts import render
+
 from sas.settings import BASE_DIR
 
 
@@ -31,4 +34,6 @@ def search(request):
 
 def detail(request, eid):
     # gathering information from wikipedia and get images from sources
-    return render(request, 'detail.html', {'eid': eid})
+    # from eid get keyword from csv
+    summary = wikipedia.summary("9-11")
+    return render(request, 'detail.html', {'eid': eid, 'summary': summary})
