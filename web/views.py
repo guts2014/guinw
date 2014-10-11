@@ -8,7 +8,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-def search(request):
+def search(request, line=10, page=0):
     query = request.GET.get('query', '')
     # collect data from CSV and list it
     # read CSV with filter
@@ -23,8 +23,11 @@ def search(request):
                 data.append(s.split(','))
         map_input.close()
     f.close()
-    total = len(data)
-    data = data[-9:]
+
+    data = data[::-1]
+    data = data[line * page:line * page + line]
+
+    # return data
     return render(request, 'search.html', {'query': query, 'data': data})
 
 
