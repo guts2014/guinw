@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Detail{% endblock %}
 {% block container %}
-
     <nav class="navbar navbar-default" role="navigation">
         <ul class="nav navbar-nav navbar-left" style="margin-left: 5px">
-            <form class="navbar-form" role="search">
+            <form action="/search/" method="get" class="navbar-form" role="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" style="width: 500px"
+                    <input name="query" type="text" class="form-control" style="width: 500px"
                            placeholder="Search name / place / date / etc">
 
                     <div class="input-group-btn">
@@ -18,11 +17,5 @@
         </ul>
     </nav>
 
-    {##map#}
-    {#<iframe#}
-    {#  width="450"#}
-    {#  height="250"#}
-    {#  frameborder="0" style="border:0"#}
-    {#  src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA8SURgq3giFIyJa0OXWwGJL_xnJQg1YnM&center=-33.8569,151.2152&zoom=15">#}
-    {#</iframe>#}
+    
 {% endblock %}
