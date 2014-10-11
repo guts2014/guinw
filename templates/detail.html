@@ -42,7 +42,12 @@
             <div class="col-xs-11 col-sm-8">
                 <div class="jumbotron">
                     <h2>{{ page.title }}</h2>
-                    {{ content }}
+                    {{ content|safe }}
+                    <br>
+                    <h5>Suggested Link(s)</h5>
+                    {% for link in relevant %}
+                        <a href="{{ link.1 }}">{{ link.0 }}</a><br>
+                    {% endfor %}
                 </div>
                 <div class="row">
                     {% for url in img_urls %}

@@ -66,7 +66,8 @@ def search(request, line=10, page=1):
     return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page - 1), 'page': page})
 
 
-def detail(request, eid):
+def detail(request, eid, altid=0):
+    altid = int(altid)
     # gathering information from wikipedia and get images from sources
     # from eid get keyword from csv
     data = getdata(eid, 1, 0)
@@ -79,11 +80,11 @@ def detail(request, eid):
 
     titles = wikipedia.search(keywords)
 
-    page = wikipedia.page(titles[0])
+    page = wikipedia.page(titles[altid])
 
     # get images from google using ajax from googleapis
 
-    searchTerm = titles[0]
+    searchTerm = titles[altid]
 
     img_urls = []
 
@@ -96,9 +97,29 @@ def detail(request, eid):
     dataInfo = content['results']
     for url in dataInfo:
         img_urls.append(url['unescapedUrl'])
+    img_urls = img_urls[:3]
 
     content = page.content
-    re.sub('[\=]+([A-Za-z\ ])+[\=]+', '<h4>$1</h4><br>', content)
+    content = re.sub('[\=]+([A-Za-z\ ])+[\=]+', __replace, content)
+
+    relevant = []
+    i = 0
+    for topic in titles:
+        tmp = []
+        tmp.append(topic)
+        tmp.append('/' + str(eid) + '/' + str(i) + '/')
+        if i == altid:
+            i += 1
+            continue
+        i += 1
+        relevant.append(tmp)
 
     return render(request, 'detail.html',
-                  {'eid': eid, 'data': data[0], 'page': page, 'content': content, 'img_urls': img_urls})
+                  {'eid': eid, 'data': data[0], 'page': page, 'content': content, 'img_urls': img_urls,
+                   'relevant': relevant})
+
+
+def __replace(matchobj):
+    matchobj = matchobj.group(0)
+    matchobj = matchobj.replace('=', '').strip()
+    return '<br><h4>' + matchobj + '</h4>'

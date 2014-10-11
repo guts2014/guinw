@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^search/$', 'web.views.search'),
     url(r'^search/(?P<page>[0-9]+)/$', 'web.views.search'),
     url(r'^(?P<eid>[0-9]+)/$', 'web.views.detail'),
+    url(r'^(?P<eid>[0-9]+)/(?P<altid>[0-9]+)/$', 'web.views.detail'),
 )
