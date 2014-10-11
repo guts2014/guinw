@@ -1,9 +1,7 @@
+from django.shortcuts import render
 from mmap import mmap
-
-from django.shortcuts import render, redirect
-import wikipedia
-
 from sas.settings import BASE_DIR
+import wikipedia
 
 
 MONTH = {1: 'January',
@@ -40,7 +38,7 @@ def getdata(query, line, page):
     f.close()
 
     data = data[::-1]
-    data = data[line * page - line:line * page]
+    data = data[line * page:line * page + line]
 
     # return data
     return data
@@ -48,19 +46,18 @@ def getdata(query, line, page):
 
 def search(request, line=10, page=1):
     query = request.GET.get('query', '')
-    print page
-    if not query:
-        return redirect('/')
     page = int(page)
-    line = int(line)
-    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page), 'page': page})
+    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page - 1), 'page': page})
 
 
 def detail(request, eid):
     # gathering information from wikipedia and get images from sources
     # from eid get keyword from csv
 
-    data = getdata(eid, 1, 0)
+    # re-use getdata() method to look for keywords
+    data = getdata(eid, 10, 0)
+    print eid
+    print data
 
     titles = wikipedia.search('2009 September 28  Myanmar Kokang')
     a = wikipedia.page(titles)
