@@ -46,6 +46,7 @@ def getdata(query, line, page):
 
 def search(request, line=10, page=1):
     query = request.GET.get('query', '')
+    line = int(line)
     page = int(page)
     return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page - 1), 'page': page})
 
