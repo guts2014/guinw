@@ -22,6 +22,7 @@ def search(request):
         for s in iter(map_input.readline, ""):
             data.append(s)
         map_input.close()
+    print len(data)
     f.close()
     # return data
     return render(request, 'search.html', {'query': query, 'data': data})
