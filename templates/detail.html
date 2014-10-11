@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Detail{% endblock %}
+{% block header %}
+    <script type="text/javascript" src="/static/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+    <link rel="stylesheet" href="/static/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen"/>
+    <script type="text/javascript" src="/static/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+    <link rel="stylesheet" href="/static/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="/static/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+    <script type="text/javascript" src="/static/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+    <link rel="stylesheet" href="/static/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css"
+          media="screen"/>
+    <script type="text/javascript" src="/static/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancybox").fancybox({
+                openEffect: 'none',
+                closeEffect: 'none'
+            });
+        });
+    </script>
+{% endblock %}
 {% block container %}
     <nav class="navbar navbar-default" role="navigation">
         <ul class="nav navbar-nav navbar-left" style="margin-left: 5px">
@@ -21,17 +41,40 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <div class="col-xs-11 col-sm-8">
                 <div class="jumbotron">
-                    <h1>Test</h1>
-                    Hi I'm T
+                    <h2>{{ page.title }}</h2>
+                    {{ content }}
+                </div>
+                <div class="row">
+                    {% for url in img_urls %}
+                        <div class="col-6 col-sm-6 col-lg-4">
+                            <a class="fancybox" rel="gallery"
+                               href="{{ url }}">
+                                <img src="{{ url }}"
+                                     class="img-responsive img-thumbnail" width="100%">
+                            </a>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-            <div class="sidebar">
+            <div class="sidebar col-xs-6 col-sm-4 sidebar-offcanvas">
                 <iframe
-                        width="32%"
+                        width="100%"
                         height="320"
-                        frameborder="0" style="bolrder:0"
-                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA8SURgq3giFIyJa0OXWwGJL_xnJQg1YnM&center=-33.8569,151.2152&zoom=15">
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyA8SURgq3giFIyJa0OXWwGJL_xnJQg1YnM&center={{ data.13 }},{{ data.14 }}&zoom=15">
                 </iframe>
+                <div class="row row-offcanvas row-offcanvas-right">
+                    <div class="jumbotron">
+                        <h4>Date (YYYY/MM/DD):</h4> {{ data.1 }}/{{ data.2 }}/{{ data.3 }}
+                        <h4>City:</h4> {{ data.11 }}
+                        <h4>Country:</h4> {{ data.8 }}
+                        <h4>Continent:</h4> {{ data.10 }}
+                        <h4>Type:</h4> {{ data.29 }}
+
+                        <h4>Description:</h4> {{ data.18 }}
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

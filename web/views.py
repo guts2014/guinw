@@ -1,8 +1,7 @@
 from csv import reader
-from django.shortcuts import render
+import re
 # from mmap import mmap
 from django.shortcuts import render
-from sas.settings import BASE_DIR
 import simplejson
 import urllib2
 import wikipedia
@@ -79,13 +78,12 @@ def detail(request, eid):
         keywords += data[0][col] + ' '
 
     titles = wikipedia.search(keywords)
-    print titles
 
-    summary = wikipedia.summary("9-11")
+    page = wikipedia.page(titles[0])
 
     # get images from google using ajax from googleapis
 
-    searchTerm = "japan flag"
+    searchTerm = titles[0]
 
     img_urls = []
 
@@ -94,11 +92,13 @@ def detail(request, eid):
     url_request = urllib2.Request(url, None)
     response = urllib2.urlopen(url_request)
     results = simplejson.load(response)
-    data = results['responseData']
-    dataInfo = data['results']
+    content = results['responseData']
+    dataInfo = content['results']
     for url in dataInfo:
         img_urls.append(url['unescapedUrl'])
 
-    print img_urls
+    content = page.content
+    re.sub('[\=]+([A-Za-z\ ])+[\=]+', '<h4>$1</h4><br>', content)
 
-    return render(request, 'detail.html', {'eid': eid, 'summary': summary, 'img_urls': img_urls})
+    return render(request, 'detail.html',
+                  {'eid': eid, 'data': data[0], 'page': page, 'content': content, 'img_urls': img_urls})
