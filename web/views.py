@@ -1,9 +1,7 @@
-from mmap import mmap
-
 from django.shortcuts import render
-import wikipedia
-
+from mmap import mmap
 from sas.settings import BASE_DIR
+import wikipedia
 
 
 MONTH = {1: 'January',
@@ -32,7 +30,7 @@ def getdata(query, line, page):
         # memory-mapInput the file, size 0 means whole file
         map_input = mmap(f.fileno(), 0)
         # read content via standard file methods
-        for s in iter(map_input.readline, ""):
+        for s in iter(map_input.readline, ''):
             s = s.decode('latin-1')
             if s.find(query) != -1:
                 data.append(s.split(','))
