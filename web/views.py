@@ -1,8 +1,14 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-import datetime
 
-def current_datetime(request):
-    now = datetime.datetime.now()
-    html = "<html><body>It is now %s.</body></html>" % now
-    return HttpResponse(html)
+
+def index(request):
+    return render(request, 'index.html')
+
+
+def search(request):
+    if request.method == 'GET':
+        return render(request, 'search.html')
+
+
+def detail(request, eid):
+    return render(request, 'detail.html', {'eid': eid})
