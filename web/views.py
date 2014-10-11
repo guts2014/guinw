@@ -8,7 +8,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-def search(request, page=0):
+def search(request):
     query = request.GET.get('query', '')
     # collect data from CSV and list it
     # read CSV with filter
