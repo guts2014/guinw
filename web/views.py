@@ -1,6 +1,6 @@
-import mmap
 import wikipedia
 from django.shortcuts import render
+from mmap import mmap
 from sas.settings import BASE_DIR
 
 
@@ -15,7 +15,7 @@ def search(request, page=0):
     data = list()
     with open((BASE_DIR + '/media/globalterrorismdb_0814dist.csv'), 'r+b') as f:
         # memory-mapInput the file, size 0 means whole file
-        map_input = mmap.mmap(f.fileno(), 0)
+        map_input = mmap(f.fileno(), 0)
         # read content via standard file methods
         for s in iter(map_input.readline, ""):
             s = s.decode('latin-1')
@@ -25,7 +25,6 @@ def search(request, page=0):
     f.close()
     total = len(data)
     data = data[-9:]
-    # return data
     return render(request, 'search.html', {'query': query, 'data': data})
 
 
