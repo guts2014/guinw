@@ -1,5 +1,4 @@
 import mmap
-import os
 
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -19,7 +18,7 @@ def search(request):
     # collect data from CSV and list it
     # read CSV with filter
     data = list()
-    with open(os.path.join(BASE_DIR,  '\media\globalterrorismdb_0814dist.csv'), 'r+b') as f:
+    with open(BASE_DIR + '/media/globalterrorismdb_0814dist.csv', 'r+b') as f:
     # with open('/Users/SmAaMyA/Documents/PyCharm/guinw/media/globalterrorismdb_0814dist.csv', 'r+b') as f:
         # memory-mapInput the file, size 0 means whole file
         map_input = mmap.mmap(f.fileno(), 0)
