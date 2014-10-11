@@ -20,12 +20,13 @@ def search(request, page=0):
         map_input = mmap.mmap(f.fileno(), 0)
         # read content via standard file methods
         for s in iter(map_input.readline, ""):
+            s = s.decode('latin-1')
             if s.find(query) != -1:
                 data.append(s.split(','))
         map_input.close()
     f.close()
     total = len(data)
-    data = data[(abs(total - page - 1)) * 10:(abs(total - page)) * 10]
+    data = data[-9:]
     # return data
     return render(request, 'search.html', {'query': query, 'data': data})
 
