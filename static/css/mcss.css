@@ -29,3 +29,7 @@ html, body, .container {
 .pointer {
     cursor: pointer;
 }
+
+.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+    background-color: #e74c3c;
+}
