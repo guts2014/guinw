@@ -29,18 +29,23 @@
         <table class="table table-striped custab">
             <thead>
             <tr>
-                Search result for ...
+                <FONT COLOR="#ffffff">Search result for ...</FONT>
             </tr>
             </thead>
             <tbody>
             {% for row in data %}
-                <tr class="clickableRow" href="/{{ row.0 }}">
-                    <td> {{ row.0 }} </td>
+                <tr class="clickableRow pointer" href="/{{ row.0 }}">
+                <td> {{ row.0 }} </td>
                     <td> {{ row.1 }} </td>
                     <td> {{ row.2 }} </td>
                     <td> {{ row.3 }} </td>
                 </tr>
             {% endfor %}
+
+            <tr class="clickableRow pointer" href="google.co.uk">
+                <td>1</td>
+                <td>2</td>
+            </tr>
             </tbody>
         </table>
     </div>

@@ -25,3 +25,7 @@ html, body, .container {
     background-color: #D64541;
     height: 450px;
 }
+
+.pointer {
+    cursor: pointer;
+}
