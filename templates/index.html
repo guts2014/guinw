@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
+{% block header %}
+    <style type="text/css">
+        iframe[id^='twitter-widget-'] {
+            width: 100% !important;
+        }
+    </style>
+{% endblock %}
 {% block container %}
-    <div class="container">
-        <div class="row vcenter">
-            <div class="panel panel-default col-lg-8 col-lg-offset-2" style="background-color: #D64541; height:450px">
+    <div class="container-fluid">
+        <div class="row vertical-center-row">
+            <div class="panel panel-default" style="background-color: #D64541; height:200px">
                 <div class="panel-body">
                     <div class="col-lg-6 col-lg-offset-3" style="margin-top: 10px">
-                        <h1 class="text-center" style="color: #ffffff">Terrorism Search</h1>
+                        <h1 class="text-center" style="color: #ffffff">Search for GUTS</h1>
 
                         <form action="/search/" method="GET">{% csrf_token %}
                             <div class="input-group" style="margin-bottom: 15px">
@@ -14,29 +21,32 @@
                                        placeholder="Search name / place / date / etc">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
+                                    <span class="glyphicon glyphicon-search"></span>
                                 </button>
 							</span>
-                        </div>
+                            </div>
                         </form>
-
-                        <div class="twitter-timeline" data-dnt="true"
-                             href="https://twitter.com/search?q=terrorism%2C+OR+terrorist%2C+OR+bombing%2C+OR+assassination%2C+OR+hijacking%2C+OR+armed+assault%2C+OR+hostage+taking"
-                             data-widget-id="520773919242850305" data-chrome="noheader nofooter noborders"></a>
-                            <script>!function (d, s, id) {
-                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                                if (!d.getElementById(id)) {
-                                    js = d.createElement(s);
-                                    js.id = id;
-                                    js.src = p + "://platform.twitter.com/widgets.js";
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                }
-                            }(document, "script", "twitter-wjs");</script>
-                        </div>
 
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6 col-lg-offset-3">
+                <div class="twitter-timeline" data-dnt="true"
+                     href="https://twitter.com/search?q=terrorism%2C+OR+terrorist%2C+OR+bombing%2C+OR+assassination%2C+OR+hijacking%2C+OR+armed+assault%2C+OR+hostage+taking"
+                     data-widget-id="520773919242850305" data-chrome="noheader nofooter noborders" height="420"
+                     width="520"></a>
+                    <script>!function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = p + "://platform.twitter.com/widgets.js";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, "script", "twitter-wjs");</script>
+                </div>
+            </div>
+
         </div>
     </div>
 {% endblock %}
