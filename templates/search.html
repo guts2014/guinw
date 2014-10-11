@@ -24,12 +24,15 @@
             </form>
         </ul>
     </nav>
-
-    <div class="leftmargin rightmargin">
-        <table class="table table-striped custab">
+    <h2 class="page-header" style="color: #ecf0f1; margin-left: 10px;">Search result for {{ query }}</h2>
+    <div class="table-responsive leftmargin rightmargin">
+        <table class="table table-striped">
             <thead>
             <tr>
-                <FONT COLOR="#ffffff">Search result for ...</FONT>
+                <th><FONT COLOR="#ffffff">Header</FONT></th>
+                <th><FONT COLOR="#ffffff">Header</FONT></th>
+                <th><FONT COLOR="#ffffff">Header</FONT></th>
+                <th><FONT COLOR="#ffffff">Header</FONT></th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +46,11 @@
             {% endfor %}
             </tbody>
         </table>
+        <ul class="pager">
+            <li>
+                <a>Next</a>
+            </li>
+        </ul>
     </div>
     </div>
 {% endblock %}
