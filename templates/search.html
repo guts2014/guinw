@@ -11,9 +11,9 @@
 
     <nav class="navbar navbar-default" role="navigation">
         <ul class="nav navbar-nav navbar-left" style="margin-left: 5px">
-            <form class="navbar-form" role="search">
+            <form action="/search/" method="get" class="navbar-form" role="search">
                 <div class="input-group">
-                    <input type="text" class="form-control" style="width: 500px"
+                    <input name="query" type="text" class="form-control" style="width: 500px"
                            placeholder="Search name / place / date / etc">
 
                     <div class="input-group-btn">
@@ -29,19 +29,19 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th><FONT COLOR="#ffffff">Header</FONT></th>
-                <th><FONT COLOR="#ffffff">Header</FONT></th>
-                <th><FONT COLOR="#ffffff">Header</FONT></th>
-                <th><FONT COLOR="#ffffff">Header</FONT></th>
+                <th><FONT COLOR="#ffffff">Date: YYYY/MM/DD</FONT></th>
+                <th><FONT COLOR="#ffffff">Country</FONT></th>
+                <th><FONT COLOR="#ffffff">City</FONT></th>
+                <th><FONT COLOR="#ffffff">Attack Type</FONT></th>
             </tr>
             </thead>
             <tbody>
             {% for row in data %}
                 <tr class="clickableRow pointer" href="/{{ row.0 }}">
-                    <td> {{ row.0 }} </td>
-                    <td> {{ row.1 }} </td>
-                    <td> {{ row.2 }} </td>
-                    <td> {{ row.3 }} </td>
+                    <td> {{ row.1 }}/{{ row.2 }}/{{ row.3 }} </td>
+                    <td> {{ row.8 }} </td>
+                    <td> {{ row.12 }} </td>
+                    <td> {{ row.28 }} </td>
                 </tr>
             {% endfor %}
             </tbody>
