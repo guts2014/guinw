@@ -1,6 +1,9 @@
 import mmap
 import os
+
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from sas.settings import BASE_DIR
 
 
@@ -8,6 +11,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+@csrf_exempt
 def search(request):
     if request.method == 'GET':
         return render(request, 'search.html')
