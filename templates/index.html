@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block container %}
+    <div class="container">
+        <div class="row vcenter">
+            <div class="panel panel-default col-lg-8 col-lg-offset-2" style="background-color: #D64541; height:450px">
+                <div class="panel-body">
+                    <div class="col-lg-6 col-lg-offset-3" style="margin-top: 10px">
+                        <h1 class="text-center" style="color: #ffffff">Terrorism Search</h1>
+
+                        <div class="input-group" style="margin-bottom: 15px">
+                            <input type="text" class="form-control" placeholder="Search name / place / date / etc">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+							</span>
+                        </div>
+
+                        <div class="twitter-timeline" data-dnt="true"
+                             href="https://twitter.com/search?q=terrorism%2C+OR+terrorist%2C+OR+bombing%2C+OR+assassination%2C+OR+hijacking%2C+OR+armed+assault%2C+OR+hostage+taking"
+                             data-widget-id="520773919242850305" data-chrome="noheader nofooter noborders">Tweets about
+                            "terrorism, OR terrorist, OR bombing, OR assassination, OR hijacking, OR armed assault, OR
+                            hostage taking"</a>
+                            <script>!function (d, s, id) {
+                                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                if (!d.getElementById(id)) {
+                                    js = d.createElement(s);
+                                    js.id = id;
+                                    js.src = p + "://platform.twitter.com/widgets.js";
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }
+                            }(document, "script", "twitter-wjs");</script>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
