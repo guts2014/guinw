@@ -10,7 +10,10 @@ def search(request):
         return render(request, 'search.html')
     query = request.POST.get('query', '')
     # collect data from CSV and list it
-    return render(request, 'search.html', {'query': query})
+    # read CSV with filter
+    data = []
+    # return data
+    return render(request, 'search.html', {'query': query, 'data': data})
 
 
 def detail(request, eid):
