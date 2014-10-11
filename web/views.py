@@ -1,8 +1,6 @@
 import mmap
-
 import wikipedia
 from django.shortcuts import render
-
 from sas.settings import BASE_DIR
 
 
