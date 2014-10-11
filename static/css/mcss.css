@@ -12,3 +12,16 @@ html, body, .container {
     display: table-cell;
     vertical-align: middle;
 }
+
+.leftmargin {
+    margin-left: 20px;
+}
+
+.rightmargin {
+    margin-right: 20px;
+}
+
+.mainpanel {
+    background-color: #D64541;
+    height: 450px;
+}

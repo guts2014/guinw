@@ -1,4 +1,7 @@
+import mmap
+import os
 from django.shortcuts import render
+from sas.settings import BASE_DIR
 
 
 def index(request):
@@ -11,7 +14,16 @@ def search(request):
     query = request.POST.get('query', '')
     # collect data from CSV and list it
     # read CSV with filter
-    data = []
+    data = list()
+    with open(os.path.join(BASE_DIR,  '\media\globalterrorismdb_0814dist.csv'), "r+b") as f:
+        # memory-mapInput the file, size 0 means whole file
+        map_input = mmap.mmap(f.fileno(), 0)
+        # read content via standard file methods
+        for s in iter(map_input.readline, ""):
+            data.append(s)
+        map_input.close()
+    print len(data)
+    f.close()
     # return data
     return render(request, 'search.html', {'query': query, 'data': data})
 
