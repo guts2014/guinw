@@ -1,7 +1,11 @@
-from django.shortcuts import render
 from mmap import mmap
-from sas.settings import BASE_DIR
+import urllib2
+
+from django.shortcuts import render
+import simplejson
 import wikipedia
+
+from sas.settings import BASE_DIR
 
 
 MONTH = {1: 'January',
@@ -66,4 +70,23 @@ def detail(request, eid):
     print titles
 
     summary = wikipedia.summary("9-11")
-    return render(request, 'detail.html', {'eid': eid, 'summary': summary})
+
+    # get images from google using ajax from googleapis
+
+    searchTerm = "japan flag"
+
+    img_urls = []
+
+    searchTerm = searchTerm.replace(' ', '+')
+    url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + searchTerm
+    request = urllib2.Request(url, None)
+    response = urllib2.urlopen(request)
+    results = simplejson.load(response)
+    data = results['responseData']
+    dataInfo = data['results']
+    for url in dataInfo:
+        img_urls.append(url['unescapedUrl'])
+
+    print img_urls
+
+    return render(request, 'detail.html', {'eid': eid, 'summary': summary, 'img_urls': img_urls})
