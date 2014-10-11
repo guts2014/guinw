@@ -66,7 +66,6 @@ def detail(request, eid):
 
     titles = wikipedia.search('2009 September 28  Myanmar Kokang')
     a = wikipedia.page(titles)
-    a.content
     print titles
 
     summary = wikipedia.summary("9-11")
@@ -79,8 +78,8 @@ def detail(request, eid):
 
     searchTerm = searchTerm.replace(' ', '+')
     url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + searchTerm
-    request = urllib2.Request(url, None)
-    response = urllib2.urlopen(request)
+    url_request = urllib2.Request(url, None)
+    response = urllib2.urlopen(url_request)
     results = simplejson.load(response)
     data = results['responseData']
     dataInfo = data['results']
