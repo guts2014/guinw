@@ -1,9 +1,10 @@
 from csv import reader
 import re
+import time
+import urllib2
 
 from django.shortcuts import render
 import simplejson
-import urllib2
 import wikipedia
 
 from sas.settings import BASE_DIR
@@ -32,17 +33,38 @@ def getdata(query, line, page):
     # read CSV with filter
     data = list()
 
+    t1 = time.time()
     with open(BASE_DIR + '/media/globalterrorismdb_0814dist.csv', 'rb') as csv_file:
         row_reader = reader(csv_file, delimiter=',', quotechar='"')
         for row in row_reader:
+            # case sensitive
+
             if query in row:
                 data.append(row)
+
+                # case insensitive
+
+                # if query.lower() in (tmp_row.lower() for tmp_row in row):
+                # data.append(row)
+
+                # multiple words
+
+                # if any(keyword in row for keyword in query.split()):
+                #     data.append(row)
+
+                # multiple words and lower case
+
+                # if any(keyword.lower() in (tmp_row.lower() for tmp_row in row) for keyword in query.split()):
+                #     data.append(row)
     csv_file.close()
+    t2 = time.time()
+    print "Time = " + str(t2 - t1)
 
     # sort by date, most recent event come first
     data.reverse()
     # partitioning elements to show in one page
     data = data[line * page:line * page + line]
+    print(len(data[0]))
 
     return data
 
