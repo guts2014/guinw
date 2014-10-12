@@ -22,21 +22,25 @@ def init_data():
 def get_data(query, line, page):
     # convert query to lowercase to search by non-case sensitive
     query = unicode(query).lower()
+    keywords = query.split(' ')
+
+    print keywords
 
     data = list()
     size = line * page
     page -= 1
     l = 0
     for rec in __DUMMY_RECORDS__:
-        if query in rec:
-            if size == 0:
-                print data
-                # partitioning elements to show in one page
-                return data[line * page:]
-            data.append(__TR_RECORDS__[l])
-            size -= 1
-        l += 1
+        # if query in rec:
+        # partitioning elements to show in one page
+        for key in keywords:
+            if key in rec:
+                data.append(__TR_RECORDS__[l])
+                size -= 1
+                if size == 0:
+                    return data[line * page:]
+            l += 1
 
     # partitioning elements to show in one page
-    # case of full data search
+    # case of full length search
     return data[line * page:]
