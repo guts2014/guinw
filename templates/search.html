@@ -24,7 +24,29 @@
             </form>
         </ul>
     </nav>
-    <h2 class="page-header" style="color: #ecf0f1; margin-left: 10px;">Search result for {{ query }}</h2>
+    <div class="row">
+        <h2 class="page-header col-md-8" style="color: #ecf0f1; margin-left: 5%;">Search result for {{ query }}</h2>
+        <ul class="pager" style="margin-top: 45px">
+            <li>
+                {% if page == 1 %}
+                    <a class="previous disabled">Back</a>
+                {% else %}
+                    <a class="previous" href="/search/{{ page|add:"-1" }}/?query={{ query }}">Back</a>
+                {% endif %}
+            </li>
+            <li>
+                <a>{{ page }}</a>
+            </li>
+            <li>
+                {% if page == 100 %}
+                    <a class="next disabled">Next</a>
+                {% else %}
+                    <a class="next" href="/search/{{ page|add:"1" }}/?query={{ query }}">Next</a>
+                {% endif %}
+            </li>
+        </ul>
+
+    </div>
     <div class="table-responsive leftmargin rightmargin">
         <table class="table table-striped">
             <thead>
@@ -46,24 +68,5 @@
             {% endfor %}
             </tbody>
         </table>
-        <ul class="pager">
-            <li>
-                {% if page == 1 %}
-                    <a>Back</a>
-                {% else %}
-                    <a href="/search/{{ page|add:"-1" }}/?query={{ query }}">Back</a>
-                {% endif %}
-            </li>
-            <li>
-                <a>{{ page }}</a>
-            </li>
-            <li>
-                {% if page == 100 %}
-                    <a>Next</a>
-                {% else %}
-                    <a href="/search/{{ page|add:"1" }}/?query={{ query }}">Next</a>
-                {% endif %}
-            </li>
-        </ul>
     </div>
 {% endblock %}
