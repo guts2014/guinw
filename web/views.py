@@ -41,15 +41,18 @@ def detail(request, eid, altid=0):
     data = get_data(eid, 1, 1)
 
     # grab keywords from data
-    column = (1, 2, 3, 8, 12, 29)
-    keywords = ''
-    for col in column:
-        if col == 2:
-            keywords += str(__MONTH__[int(data[0][col])]) + ' '
-        else:
-            keywords += data[0][col] + ' '
+    titles = []
+    column = [1, 2, 3, 8, 12, 29]
+    while len(column) > 0 and len(titles) == 0:
+        keywords = ''
+        for col in column:
+            if col == 2:
+                keywords += str(__MONTH__[int(data[0][col])]) + ' '
+            else:
+                keywords += data[0][col] + ' '
 
-    titles = wikipedia.search(keywords)
+        titles = wikipedia.search(keywords)
+        column = column[:-1]
     for i in xrange(len(titles)):
         titles[i] = titles[i].encode('utf-8')
 

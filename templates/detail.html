@@ -18,12 +18,14 @@
                 closeEffect: 'none'
             });
             var src_str = $("#contentbox").html();
-            var term = "{{ query }}";
-            term = term.replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
-            var pattern = new RegExp("(" + term + ")", "gi");
-
-            src_str = src_str.replace(pattern, "<mark>$1</mark>");
-            src_str = src_str.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/, "$1</mark>$2<mark>$4");
+            var terms = "{{ query }}";
+            terms = terms.split(" ");
+            for (var i = 0; i < terms.length; i++) {
+                terms[i] = terms[i].replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
+                var pattern = new RegExp("(" + terms[i] + ")", "gi");
+                src_str = src_str.replace(pattern, "<mark>$1</mark>");
+                src_str = src_str.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/, "$1</mark>$2<mark>$4");
+            }
 
             $("#contentbox").html(src_str);
         });
