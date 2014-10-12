@@ -1,71 +1,85 @@
 from csv import reader
-import re
+from sas.settings import BASE_DIR
 
 from django.shortcuts import render
+import re
 import simplejson
 import urllib2
 import wikipedia
 
-from sas.settings import BASE_DIR
+
+__MONTH__ = {1: 'January',
+             2: 'February',
+             3: 'March',
+             4: 'April',
+             5: 'May',
+             6: 'June',
+             7: 'July',
+             8: 'August',
+             9: 'September',
+             10: 'October',
+             11: 'November',
+             12: 'December'}
 
 
-MONTH = {1: 'January',
-         2: 'February',
-         3: 'March',
-         4: 'April',
-         5: 'May',
-         6: 'June',
-         7: 'July',
-         8: 'August',
-         9: 'September',
-         10: 'October',
-         11: 'November',
-         12: 'December'}
+__TR_RECORDS__ = list()
+__DUMMY_RECORDS__ = list()
+with open(BASE_DIR + '/media/globalterrorismdb_0814dist.csv', 'rb') as csv_file:
+    row_reader = reader(csv_file, delimiter=',', quotechar='"')
+    for row in row_reader:
+        __TR_RECORDS__.append(row)
+        __DUMMY_RECORDS__.append(list(s.lower() for s in row))
+csv_file.close()
+# sort data from the most recent event
+__TR_RECORDS__.reverse()
+__DUMMY_RECORDS__.reverse()
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-def getdata(query, line, page):
-    # collect data from CSV and list it
-    # read CSV with filter
-    data = list()
+def get_data(query, line, page):
+    # convert query to lowercase to search by non-case sensitive
     query = unicode(query).lower()
-    with open(BASE_DIR + '/media/globalterrorismdb_0814dist.csv', 'rb') as csv_file:
-        row_reader = reader(csv_file, delimiter=',', quotechar='"')
-        for row in row_reader:
-            if query in (s.lower() for s in row):
-                data.append(row)
-    csv_file.close()
 
-    # sort by date, most recent event come first
-    data.reverse()
+    data = list()
+    size = line * page
+    page -= 1
+    l = 0
+    for rec in __DUMMY_RECORDS__:
+        if query in rec:
+            if size == 0:
+                # partitioning elements to show in one page
+                return data[line * page:]
+            data.append(__TR_RECORDS__[l])
+            size -= 1
+        l += 1
+
     # partitioning elements to show in one page
-    data = data[line * page:line * page + line]
-
-    return data
+    # case of full data search
+    return data[line * page:]
 
 
 def search(request, line=10, page=1):
     query = request.GET.get('query', '')
     line = int(line)
     page = int(page)
-    return render(request, 'search.html', {'query': query, 'data': getdata(query, line, page - 1), 'page': page})
+    return render(request, 'search.html', {'query': query, 'data': get_data(query, line, page), 'page': page})
 
 
 def detail(request, eid, altid=0):
     altid = int(altid)
     # gathering information from wikipedia and get images from sources
     # from eid get keyword from csv
-    data = getdata(eid, 1, 0)
+    data = get_data(eid, 1, 0)
 
     # grab keywords from data
     column = (1, 2, 3, 8, 12, 29)
     keywords = ''
     for col in column:
         if col == 2:
-            keywords += str(MONTH[int(data[0][col])]) + ' '
+            keywords += str(__MONTH__[int(data[0][col])]) + ' '
         else:
             keywords += data[0][col] + ' '
 
@@ -76,18 +90,18 @@ def detail(request, eid, altid=0):
     page = wikipedia.page(titles[altid])
 
     # get images from google using ajax from googleapis
-    searchTerm = titles[altid]
+    search_term = titles[altid]
 
     img_urls = []
 
-    searchTerm = searchTerm.replace(' ', '+')
-    url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + searchTerm
+    search_term = search_term.replace(' ', '+')
+    url = 'https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=' + search_term
     url_request = urllib2.Request(url, None)
     response = urllib2.urlopen(url_request)
     results = simplejson.load(response)
     content = results['responseData']
-    dataInfo = content['results']
-    for url in dataInfo:
+    data_info = content['results']
+    for url in data_info:
         img_urls.append(url['unescapedUrl'])
     img_urls = img_urls[:3]
 
@@ -111,7 +125,7 @@ def detail(request, eid, altid=0):
                    'relevant': relevant})
 
 
-def __replace(matchobj):
-    matchobj = matchobj.group(0)
-    matchobj = matchobj.replace('=', '').strip()
-    return '<br><h4>' + matchobj + '</h4>'
+def __replace(match_obj):
+    match_obj = match_obj.group(0)
+    match_obj = match_obj.replace('=', '').strip()
+    return '<br><h4>' + match_obj + '</h4>'
