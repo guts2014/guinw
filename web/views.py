@@ -1,9 +1,11 @@
-from django.shortcuts import render
-from sas.records import get_data
 import re
-import simplejson
 import urllib2
+
+from django.shortcuts import render
+import simplejson
 import wikipedia
+
+from sas.records import get_data
 
 
 __MONTH__ = {1: 'January',
@@ -32,6 +34,7 @@ def search(request, line=10, page=1):
 
 
 def detail(request, eid, altid=0):
+    query = request.GET.get('query', '')
     altid = int(altid)
     # gathering information from wikipedia and get images from sources
     # from eid get keyword from csv
@@ -84,7 +87,7 @@ def detail(request, eid, altid=0):
         relevant.append(tmp)
 
     return render(request, 'detail.html',
-                  {'eid': eid, 'data': data[0], 'page': page, 'content': content, 'img_urls': img_urls,
+                  {'eid': eid, 'data': data[0], 'query': query, 'page': page, 'content': content, 'img_urls': img_urls,
                    'relevant': relevant})
 
 

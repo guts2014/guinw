@@ -59,8 +59,8 @@
             </thead>
             <tbody>
             {% for row in data %}
-                <tr class="clickableRow pointer" href="/{{ row.0 }}">
-                    <td> {{ row.1 }}/{{ row.2 }}/{{ row.3 }} </td>
+                <tr class="clickableRow pointer" href="/{{ row.0 }}/?query={{ query }}">
+                <td> {{ row.1 }}/{{ row.2 }}/{{ row.3 }} </td>
                     <td> {{ row.8 }} </td>
                     <td> {{ row.12 }} </td>
                     <td> {{ row.29 }} </td>

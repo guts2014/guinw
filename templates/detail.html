@@ -17,6 +17,15 @@
                 openEffect: 'none',
                 closeEffect: 'none'
             });
+            var src_str = $("#contentbox").html();
+            var term = "{{ query }}";
+            term = term.replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
+            var pattern = new RegExp("(" + term + ")", "gi");
+
+            src_str = src_str.replace(pattern, "<mark>$1</mark>");
+            src_str = src_str.replace(/(<mark>[^<>]*)((<[^>]+>)+)([^<>]*<\/mark>)/, "$1</mark>$2<mark>$4");
+
+            $("#contentbox").html(src_str);
         });
     </script>
 {% endblock %}
@@ -40,8 +49,8 @@
     <div class="container">
         <div class="row row-offcanvas row-offcanvas-right">
             <div class="col-xs-11 col-sm-8">
-                <div class="jumbotron">
-                    <h2>{{ page.title }}</h2>
+                <div id="contentbox" class="jumbotron">
+                <h2>{{ page.title }}</h2>
                     {{ content|safe }}
                     <br>
                     <h5>Suggested Link(s)</h5>
