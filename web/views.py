@@ -50,12 +50,12 @@ def getdata(query, line, page):
                 # multiple words
 
                 # if any(keyword in row for keyword in query.split()):
-                #     data.append(row)
+                # data.append(row)
 
-                # multiple words and lower case
+                # multiple words and case insensitive
 
                 # if any(keyword.lower() in (tmp_row.lower() for tmp_row in row) for keyword in query.split()):
-                #     data.append(row)
+                # data.append(row)
     csv_file.close()
     t2 = time.time()
     print "Time = " + str(t2 - t1)
