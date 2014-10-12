@@ -24,22 +24,35 @@ def get_data(query, line, page):
     query = unicode(query).lower()
     keywords = query.split(' ')
 
-    print keywords
-
     data = list()
     size = line * page
     page -= 1
     l = 0
     for rec in __DUMMY_RECORDS__:
+        found = 0
         # if query in rec:
         # partitioning elements to show in one page
-        for key in keywords:
-            if key in rec:
+        for r in rec:
+            for key in keywords:
+                key = key.encode('utf-8')
+                if r.find(key) != -1:
+                    found += 1
+                    break
+            if found == len(keywords):
+                break
+        if found == len(keywords):
+            print rec
+            add = True
+            for item in data:
+                if rec[0] == item[0]:
+                    add = False
+                    break
+            if add:
                 data.append(__TR_RECORDS__[l])
                 size -= 1
                 if size == 0:
                     return data[line * page:]
-            l += 1
+        l += 1
 
     # partitioning elements to show in one page
     # case of full length search
